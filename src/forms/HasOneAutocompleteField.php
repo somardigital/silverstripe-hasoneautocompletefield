@@ -1,6 +1,6 @@
 <?php
 
-namespace NathanCox\HasOneAutocompleteField\Forms;
+namespace primoz2500\HasOneAutocompleteField\Forms;
 
 use SilverStripe\Forms\FormField;
 use SilverStripe\View\Requirements;

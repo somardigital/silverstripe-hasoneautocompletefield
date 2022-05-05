@@ -1,7 +1,7 @@
 {
 	"name": "primoz2500/hasoneautocompletefield",
 	"description": "A CMS form field for adding has_one relationships using autocomplete",
-	"homepage": "https://github.com/nathancox/silverstripe-hasoneautocompletefield",
+	"homepage": "https://github.com/primoz2500/silverstripe-hasoneautocompletefield",
 	"type": "silverstripe-vendormodule",
 	"keywords": [
 		"silverstripe",
@@ -23,7 +23,7 @@
 		}
 	],
 	"support": {
-		"issues": "https://github.com/nathancox/silverstripe-hasoneautocompletefield/issues"
+		"issues": "https://github.com/primoz2500/silverstripe-hasoneautocompletefield/issues"
 	},
     "extra": {
         "expose": [
@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "NathanCox\\HasOneAutocompleteField\\": "src/"
+            "primoz2500\\HasOneAutocompleteField\\": "src/"
         }
     },
 	"require": {
