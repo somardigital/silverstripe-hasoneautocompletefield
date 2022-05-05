@@ -1,5 +1,5 @@
 {
-	"name": "nathancox/hasoneautocompletefield",
+	"name": "primoz2500/hasoneautocompletefield",
 	"description": "A CMS form field for adding has_one relationships using autocomplete",
 	"homepage": "https://github.com/nathancox/silverstripe-hasoneautocompletefield",
 	"type": "silverstripe-vendormodule",
@@ -16,6 +16,10 @@
 		{
 			"name": "Nathan Cox",
 			"email": "me@nathan.net.nz"
+		},
+        {
+			"name": "Primoz Skerbis",
+			"email": "primoz2500@gmail.com"
 		}
 	],
 	"support": {
