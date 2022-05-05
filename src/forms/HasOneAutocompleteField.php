@@ -1,18 +1,18 @@
 <?php
 
-namespace primoz2500\HasOneAutocompleteField\Forms;
+namespace NathanCox\HasOneAutocompleteField\Forms;
 
-use SilverStripe\Forms\FormField;
-use SilverStripe\View\Requirements;
 use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Core\Convert;
-use SilverStripe\ORM\DataList;
-use SilverStripe\Forms\FieldGroup;
-use SilverStripe\Forms\LiteralField;
-use SilverStripe\Forms\FormAction;
-use SilverStripe\Forms\TextField;
-use SilverStripe\Forms\HiddenField;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Convert;
+use SilverStripe\Forms\FieldGroup;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\FormField;
+use SilverStripe\Forms\HiddenField;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\DataList;
+use SilverStripe\View\Requirements;
 
 class HasOneAutocompleteField extends FormField
 {
@@ -72,15 +72,15 @@ class HasOneAutocompleteField extends FormField
     protected $autocompleteDelay = 300;
 
     /**
-     * @param string $name         The field name
-     * @param string $title        The label text
+     * @param string $name The field name
+     * @param string $title The label text
      * @param string $sourceObject Class name of the DataObject subclass
-     * @param string $labelField   The object field used for display
+     * @param string $labelField The object field used for display
      */
     public function __construct($name, $title = null, $sourceObject, $labelField = 'Title')
     {
         $this->sourceObject = $sourceObject;
-        $this->labelField   = $labelField;
+        $this->labelField = $labelField;
         $this->clearButtonEnabled = Config::inst()->get(HasOneAutocompleteField::class, 'clearButtonEnabled');
 
         $configAutocompleteDelay = intval(Config::inst()->get(HasOneAutocompleteField::class, 'autocompleteDelay'));
@@ -93,13 +93,13 @@ class HasOneAutocompleteField extends FormField
 
     /**
      * The action that handles AJAX search requests
-     * @param  SS_HTTPRequest $request
+     * @param SS_HTTPRequest $request
      * @return json
      */
     public function search(HTTPRequest $request)
     {
         // Check form field state
-        if($this->isDisabled() || $this->isReadonly()) {
+        if ($this->isDisabled() || $this->isReadonly()) {
             return $this->httpError(403);
         }
 
@@ -121,25 +121,36 @@ class HasOneAutocompleteField extends FormField
         return Convert::array2json($json);
     }
 
+    public function getSearchCallback()
+    {
+        return $this->searchCallback;
+    }
+
+    public function setSearchCallback($callback)
+    {
+        $this->searchCallback = $callback;
+        return $this;
+    }
+
     /**
      * Takes the search term and returns a DataList
-     * @param  string $query
+     * @param string $query
      * @return DataList
      */
     protected function getResults($query)
     {
-         $searchFields = ($this->getSearchFields() ?: singleton($this->sourceObject)->stat('searchable_fields'));
+        $searchFields = ($this->getSearchFields() ?: singleton($this->sourceObject)->stat('searchable_fields'));
 
-        if(!$searchFields) {
+        if (!$searchFields) {
             throw new Exception(
                 sprintf('HasOneAutocompleteField: No searchable fields could be found for class "%s"',
-                $this->sourceObject));
+                    $this->sourceObject));
         }
 
         $params = [];
         $sort = [];
 
-        foreach($searchFields as $searchField) {
+        foreach ($searchFields as $searchField) {
             $name = (strpos($searchField, ':') !== FALSE) ? $searchField : "$searchField:PartialMatch:nocase";
             $params[$name] = $query;
             $sort[$searchField] = "ASC";
@@ -153,49 +164,6 @@ class HasOneAutocompleteField extends FormField
         return $results;
     }
 
-    /**
-     * Takes the DataList of search results and returns the json to be sent to the front end.
-     * @param  DataList
-     * @return json
-     */
-    protected function processResults($results)
-    {
-        $json = [];
-        $count = 0;
-        foreach($results as $result) {
-            $name = $result->{$this->labelField}();
-
-            $json[$count++] = [
-                'id' => $result->ID,
-                'name' => $name,
-                'currentString' => $this->getCurrentItemText($result)
-            ];
-        }
-
-        return $json;
-    }
-
-
-    /**
-     * Get the class name of the objects to be searched
-     * @return string A DataObject subclass
-     */
-    public function getSourceObject()
-    {
-        return $this->sourceObject;
-    }
-
-    /**
-     * Set the name of the class to search for
-     * @param string $sourceObject a DataObject subclass
-     */
-    public function setSourceObject($sourceObject)
-    {
-        $this->sourceObject = $sourceObject;
-        return $this;
-    }
-
-
     public function getSearchFields()
     {
         return $this->searchFields;
@@ -208,52 +176,6 @@ class HasOneAutocompleteField extends FormField
         } else {
             $this->searchFields = array($fields);
         }
-        return $this;
-    }
-
-
-    public function getSearchCallback()
-    {
-        return $this->searchCallback;
-    }
-
-    public function setSearchCallback($callback)
-    {
-        $this->searchCallback = $callback;
-        return $this;
-    }
-
-    public function getProcessCallback()
-    {
-        return $this->processCallback;
-    }
-
-    public function setProcessCallback($callback)
-    {
-        $this->processCallback = $callback;
-        return $this;
-    }
-
-
-    public function getDefaultText()
-    {
-        return $this->defaultText;
-    }
-
-    public function setDefaultText($text)
-    {
-        $this->defaultText = $text;
-        return $this;
-    }
-
-    public function getPlaceholderText()
-    {
-        return $this->placeholderText;
-    }
-
-    public function setPlaceholderText($text)
-    {
-        $this->placeholderText = $text;
         return $this;
     }
 
@@ -276,26 +198,140 @@ class HasOneAutocompleteField extends FormField
         return $this;
     }
 
+    public function getProcessCallback()
+    {
+        return $this->processCallback;
+    }
+
+    public function setProcessCallback($callback)
+    {
+        $this->processCallback = $callback;
+        return $this;
+    }
+
+    /**
+     * Takes the DataList of search results and returns the json to be sent to the front end.
+     * @param DataList
+     * @return json
+     */
+    protected function processResults($results)
+    {
+        $json = [];
+        $count = 0;
+        foreach ($results as $result) {
+            $name = $result->{$this->labelField}();
+
+            $json[$count++] = [
+                'id' => $result->ID,
+                'name' => $name,
+                'currentString' => $this->getCurrentItemText($result)
+            ];
+        }
+
+        return $json;
+    }
+
+    /**
+     * Return the text to be dislayed next to the "Edit" button indicating the currently selected item.
+     * By default is displays $labelField and wraps it in a link if the object has the Link() method.
+     * @param DataObjext $item
+     * @return string
+     */
+    function getCurrentItemText($item = null)
+    {
+        $text = $this->getDefaultText();
+
+        if (is_null($item)) {
+            $item = $this->getItem();
+        }
+
+        if ($item && $item->ID > 0) {
+            $labelField = $this->labelField;
+            if ($item->$labelField()) {
+                $text = $item->$labelField();
+            } else {
+                user_error("PageSearchField can't find field called " . $labelField . "on " . $item->ClassName, E_USER_ERROR);
+            }
+
+            if (method_exists($item, "Link")) {
+                $text = "<a href='{$item->Link()}' target='_blank'>" . $text . '</a>';
+            }
+        }
+
+        return $text;
+    }
+
+    public function getDefaultText()
+    {
+        return $this->defaultText;
+    }
+
+    public function setDefaultText($text)
+    {
+        $this->defaultText = $text;
+        return $this;
+    }
+
+    /**
+     * Get the currently selected object
+     * @return DataObject
+     */
+    function getItem()
+    {
+        $sourceObject = $this->sourceObject;
+        if ($this->value !== null) {
+            $item = $sourceObject::get()->byID($this->value);
+        } else {
+            $item = $sourceObject::create();
+        }
+        return $item;
+    }
+
+    /**
+     * Get the class name of the objects to be searched
+     * @return string A DataObject subclass
+     */
+    public function getSourceObject()
+    {
+        return $this->sourceObject;
+    }
+
+    /**
+     * Set the name of the class to search for
+     * @param string $sourceObject a DataObject subclass
+     */
+    public function setSourceObject($sourceObject)
+    {
+        $this->sourceObject = $sourceObject;
+        return $this;
+    }
+
+    public function getPlaceholderText()
+    {
+        return $this->placeholderText;
+    }
+
+    public function setPlaceholderText($text)
+    {
+        $this->placeholderText = $text;
+        return $this;
+    }
+
     public function enableClearButton()
     {
         $this->setClearButtonEnabled(true);
         return $this;
     }
 
-    public function disableClearButton()
-    {
-        $this->setClearButtonEnabled(false);
-        return $this;
-    }
-
-    private function getClearButtonEnabled()
-    {
-        return $this->clearButtonEnabled;
-    }
-
     private function setClearButtonEnabled(bool $enabled = true)
     {
         $this->clearButtonEnabled = $enabled;
+        return $this;
+    }
+
+    public function disableClearButton()
+    {
+        $this->setClearButtonEnabled(false);
         return $this;
     }
 
@@ -318,14 +354,14 @@ class HasOneAutocompleteField extends FormField
         $fields = FieldGroup::create($this->name);
         $fields->setName($this->name);
 
-        $fields->push($labelField = LiteralField::create($this->name.'Label', '<span class="hasoneautocomplete-currenttext">' . $this->getCurrentItemText() . '</span>'));
+        $fields->push($labelField = LiteralField::create($this->name . 'Label', '<span class="hasoneautocomplete-currenttext">' . $this->getCurrentItemText() . '</span>'));
 
-        $fields->push($editField = FormAction::create($this->name.'Edit', ''));
+        $fields->push($editField = FormAction::create($this->name . 'Edit', ''));
         $editField->setUseButtonTag(true);
         $editField->setButtonContent('Edit');
         $editField->addExtraClass('edit hasoneautocomplete-editbutton btn-outline-secondary btn-sm');
 
-        $fields->push($searchField = TextField::create($this->name.'Search', ''));
+        $fields->push($searchField = TextField::create($this->name . 'Search', ''));
         $searchField->setAttribute('data-search-url', $this->Link('search'));
         $searchField->setAttribute('size', 40);
         $searchField->setAttribute('placeholder', $this->placeholderText);
@@ -338,13 +374,13 @@ class HasOneAutocompleteField extends FormField
             $idField->setValue($this->value);
         }
 
-        $fields->push($cancelField = FormAction::create($this->name.'Cancel', ''));
+        $fields->push($cancelField = FormAction::create($this->name . 'Cancel', ''));
         $cancelField->setUseButtonTag(true);
         $cancelField->setButtonContent('Cancel');
         $cancelField->addExtraClass('edit hasoneautocomplete-cancelbutton btn-outline-secondary');
 
         if ($this->getClearButtonEnabled() === true) {
-            $fields->push($clearField = FormAction::create($this->name.'Clear', ''));
+            $fields->push($clearField = FormAction::create($this->name . 'Clear', ''));
             $clearField->setUseButtonTag(true);
             $clearField->setButtonContent('Clear');
             $clearField->addExtraClass('clear hasoneautocomplete-clearbutton btn-outline-danger btn-hide-outline action--delete btn-sm');
@@ -357,52 +393,10 @@ class HasOneAutocompleteField extends FormField
         return $fields;
     }
 
-    /**
-     * Get the currently selected object
-     * @return DataObject
-     */
-    function getItem()
+    private function getClearButtonEnabled()
     {
-        $sourceObject = $this->sourceObject;
-        if ($this->value !== null) {
-            $item = $sourceObject::get()->byID($this->value);
-        } else {
-            $item = $sourceObject::create();
-        }
-        return $item;
+        return $this->clearButtonEnabled;
     }
-
-
-    /**
-     * Return the text to be dislayed next to the "Edit" button indicating the currently selected item.
-     * By default is displays $labelField and wraps it in a link if the object has the Link() method.
-     * @param  DataObjext $item
-     * @return string
-     */
-    function getCurrentItemText($item = null)
-    {
-        $text = $this->getDefaultText();
-
-        if (is_null($item)) {
-            $item = $this->getItem();
-        }
-
-        if ($item && $item->ID > 0) {
-            $labelField = $this->labelField;
-            if ($item->$labelField()) {
-                $text = $item->$labelField();
-            } else {
-                user_error("PageSearchField can't find field called ".$labelField."on ".$item->ClassName, E_USER_ERROR);
-            }
-
-            if (method_exists($item, "Link")) {
-                $text = "<a href='{$item->Link()}' target='_blank'>".$text.'</a>';
-            }
-        }
-
-        return $text;
-    }
-
 
 
 }

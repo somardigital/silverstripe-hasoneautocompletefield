@@ -4,21 +4,26 @@ SilverStripe HasOneAutocompleteField
 Overview
 --------------
 
-This module adds a field for using an autocomplete dropdown to assign a has_one relationship.  It's styled after the URLSegment field.
+This module adds a field for using an autocomplete dropdown to assign a has_one relationship. It's styled after the
+URLSegment field.
 
-FORK CHANGES: Added support for functions as result list title ( fields are accessible as get{FieldName} functions just with the function name )
+FORK CHANGES: Added support for functions as result list title ( fields are accessible as get{FieldName} functions just
+with the function name )
 
 
 Maintainer Contacts
 -------------------
-*  Nathan Cox (<nathan@flyingmonkey.co.nz>)
 
+* Nathan Cox (<nathan@flyingmonkey.co.nz>)
+* Primoz Skerbis (<primoz2500@gmail.com>)
 
 Requirements
 ------------
+
 * SilverStripe 4.0+
 
-For SilverStripe 3.x see the version 1 branch on Github: https://github.com/nathancox/silverstripe-hasoneautocompletefield/tree/1
+For SilverStripe 3.x see the version 1 branch on
+Github: https://github.com/nathancox/silverstripe-hasoneautocompletefield/tree/1
 
 
 Installation Instructions
@@ -27,12 +32,12 @@ Installation Instructions
 Via composer:
 
 ```
-composer require nathancox/hasoneautocompletefield
+composer require primoz2500/hasoneautocompletefield
 ```
 
 Or manually download the module and place it in a folder called hasoneautocompletefield in your site root.
 
-Visit yoursite.com/dev/build
+Visit yoursite.com/dev/build?flush=1
 
 Documentation
 -------------
@@ -60,6 +65,7 @@ class Page extends SiteTree
 
         $fields->addFieldToTab('Root.Content', $pageField = HasOneAutocompleteField::create('LinkedPageID', 'Linked Page', 'Page', 'Title'));
         $pageField->setSearchFields(array('Title', 'Content'));
+        $pageField->enableClearButton();
 
         return $fields;
     }
@@ -67,7 +73,6 @@ class Page extends SiteTree
 
 ```
 
-
 Known Issues
 ------------
-[Issue Tracker](https://github.com/nathancox/silverstripe-hasoneautocompletefield/issues)
+[Issue Tracker](https://github.com/primoz2500/silverstripe-hasoneautocompletefield/issues)

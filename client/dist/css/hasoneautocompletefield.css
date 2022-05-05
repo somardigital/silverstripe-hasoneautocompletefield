@@ -1,8 +1,9 @@
 .field.hasoneautocomplete .fieldgroup-field {
-    padding-top:0;
+    padding-top: 0;
 }
+
 .field.hasoneautocomplete .fieldholder-small {
-    padding-bottom:0;
+    padding-bottom: 0;
 }
 
 .hasoneautocomplete-currenttext {
@@ -24,6 +25,7 @@
 .hasoneautocomplete.showsearch .hasoneautocomplete-cancelbutton {
     display: inline-block;
 }
+
 .hasoneautocomplete.showsearch .hasoneautocomplete-currenttext,
 .hasoneautocomplete.showsearch .hasoneautocomplete-editbutton,
 .hasoneautocomplete.showsearch .hasoneautocomplete-clearbutton {
@@ -36,33 +38,38 @@ Styles below this point are aesthetic rather than functional,
 changing the appearance of the autocomplete field
 */
 .hasoneautocomplete .hasoneautocomplete-search::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #D2D5D8;
+    color: #D2D5D8;
 }
+
 .hasoneautocomplete .hasoneautocomplete-search::-moz-placeholder { /* Firefox 19+ */
-  color: #D2D5D8;
+    color: #D2D5D8;
 }
+
 .hasoneautocomplete .hasoneautocomplete-search:-ms-input-placeholder { /* IE 10+ */
-  color: #D2D5D8;
+    color: #D2D5D8;
 }
+
 .hasoneautocomplete .hasoneautocomplete-search:-moz-placeholder { /* Firefox 18- */
-  color: #D2D5D8;
+    color: #D2D5D8;
 }
 
 .ui-autocomplete li {
-    border-bottom:1px solid #D2D5D8;
+    border-bottom: 1px solid #D2D5D8;
 }
+
 .ui-autocomplete li a.ui-state-focus {
     cursor: pointer;
-    text-decoration:none;
-    background:#f6f7f8;
-    border-radius:0;
-    border:1px solid #D2D5D8;
-    border-left:1px solid #f6f7f8;
-    border-right:1px solid #f6f7f8;
+    text-decoration: none;
+    background: #f6f7f8;
+    border-radius: 0;
+    border: 1px solid #D2D5D8;
+    border-left: 1px solid #f6f7f8;
+    border-right: 1px solid #f6f7f8;
 }
+
 .ui-autocomplete li small {
-    color:#999999;
-    font-size:11px;
-    clear:both;
-    display:block;
+    color: #999999;
+    font-size: 11px;
+    clear: both;
+    display: block;
 }
