@@ -6,6 +6,8 @@ Overview
 
 This module adds a field for using an autocomplete dropdown to assign a has_one relationship.  It's styled after the URLSegment field.
 
+FORK CHANGES: Added support for functions as result list title ( fields are accessible as get{FieldName} functions just with the function name )
+
 
 Maintainer Contacts
 -------------------

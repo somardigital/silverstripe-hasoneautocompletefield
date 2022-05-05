@@ -87,7 +87,7 @@ class HasOneAutocompleteField extends FormField
         if ($configAutocompleteDelay > 0) {
             $this->autocompleteDelay = $configAutocompleteDelay;
         }
-      
+
         parent::__construct($name, $title);
     }
 
@@ -138,7 +138,7 @@ class HasOneAutocompleteField extends FormField
 
         $params = [];
         $sort = [];
-        
+
         foreach($searchFields as $searchField) {
             $name = (strpos($searchField, ':') !== FALSE) ? $searchField : "$searchField:PartialMatch:nocase";
             $params[$name] = $query;
@@ -163,8 +163,8 @@ class HasOneAutocompleteField extends FormField
         $json = [];
         $count = 0;
         foreach($results as $result) {
-            $name = $result->{$this->labelField};
-            
+            $name = $result->{$this->labelField}();
+
             $json[$count++] = [
                 'id' => $result->ID,
                 'name' => $name,
@@ -298,7 +298,7 @@ class HasOneAutocompleteField extends FormField
         $this->clearButtonEnabled = $enabled;
         return $this;
     }
-      
+
     public function getAutocompleteDelay()
     {
         return $this->autocompleteDelay;
@@ -389,8 +389,8 @@ class HasOneAutocompleteField extends FormField
 
         if ($item && $item->ID > 0) {
             $labelField = $this->labelField;
-            if (isset($item->$labelField)) {
-                $text = $item->$labelField;
+            if ($item->$labelField()) {
+                $text = $item->$labelField();
             } else {
                 user_error("PageSearchField can't find field called ".$labelField."on ".$item->ClassName, E_USER_ERROR);
             }
