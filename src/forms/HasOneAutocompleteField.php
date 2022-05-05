@@ -312,8 +312,8 @@ class HasOneAutocompleteField extends FormField
 
     public function Field($properties = array())
     {
-        Requirements::javascript('nathancox/hasoneautocompletefield: client/dist/js/hasoneautocompletefield.js');
-        Requirements::css('nathancox/hasoneautocompletefield: client/dist/css/hasoneautocompletefield.css');
+        Requirements::javascript('primoz2500/hasoneautocompletefield: client/dist/js/hasoneautocompletefield.js');
+        Requirements::css('primoz2500/hasoneautocompletefield: client/dist/css/hasoneautocompletefield.css');
 
         $fields = FieldGroup::create($this->name);
         $fields->setName($this->name);
