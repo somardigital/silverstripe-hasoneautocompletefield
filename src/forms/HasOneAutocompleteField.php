@@ -169,6 +169,20 @@ class HasOneAutocompleteField extends FormField
         return $this->searchFields;
     }
 
+    public function performReadonlyTransformation()
+    {
+        $clone = parent::performReadonlyTransformation();
+        $item = $this->getItem();
+        if($item) {
+            $labelField = $this->labelField;
+            if ($item->$labelField()) {
+                $clone->setValue($item->$labelField());
+            }
+        }
+
+        return $clone;
+    }
+
     public function setSearchFields($fields)
     {
         if (is_array($fields)) {
