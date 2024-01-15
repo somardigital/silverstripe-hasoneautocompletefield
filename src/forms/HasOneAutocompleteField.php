@@ -2,9 +2,9 @@
 
 namespace primoz2500\HasOneAutocompleteField\Forms;
 
+use Exception;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Config\Config;
-use SilverStripe\Core\Convert;
 use SilverStripe\Forms\FieldGroup;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\FormField;
@@ -121,7 +121,7 @@ class HasOneAutocompleteField extends FormField
             $json = $this->processResults($results);
         }
 
-        return Convert::json_encode($json);
+        return json_encode($json);
     }
 
     public function getSearchCallback()

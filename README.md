@@ -20,11 +20,7 @@ Maintainer Contacts
 Requirements
 ------------
 
-* SilverStripe 4.0+
-
-For SilverStripe 3.x see the version 1 branch on
-Github: https://github.com/nathancox/silverstripe-hasoneautocompletefield/tree/1
-
+* SilverStripe 5.0+
 
 Installation Instructions
 -------------------------
