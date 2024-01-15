@@ -71,6 +71,9 @@ class HasOneAutocompleteField extends FormField
      */
     protected $autocompleteDelay = 300;
 
+    protected $sourceObject;
+    protected $labelField;
+
     /**
      * @param string $name The field name
      * @param string $title The label text
@@ -118,7 +121,7 @@ class HasOneAutocompleteField extends FormField
             $json = $this->processResults($results);
         }
 
-        return Convert::array2json($json);
+        return Convert::json_encode($json);
     }
 
     public function getSearchCallback()
